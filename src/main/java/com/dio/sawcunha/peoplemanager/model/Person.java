@@ -30,7 +30,7 @@ public class People {
     private LocalDate birthday;
     @Column(name = "email")
     private String email;
-    @Column(name = "cpf")
+    @Column(name = "cpf", unique = true)
     private String cpf;
     @Column(name = "description")
     private String description;
