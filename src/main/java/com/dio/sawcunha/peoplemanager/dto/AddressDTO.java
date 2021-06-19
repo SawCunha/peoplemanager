@@ -1,14 +1,17 @@
 package com.dio.sawcunha.peoplemanager.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dio.sawcunha.peoplemanager.enums.eSex;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -17,8 +20,6 @@ import javax.validation.constraints.Positive;
 public class AddressDTO {
 
     private Long id;
-    @JsonIgnore
-    private PersonDTO person;
     @NotEmpty(message = "It is mandatory to inform the Zip Code")
     private String zipCode;
     @NotEmpty(message = "It is mandatory to inform the City")
@@ -38,5 +39,35 @@ public class AddressDTO {
     private String complement;
     private String reference;
 
+    private AddressPersonDTO person;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class AddressPersonDTO {
+        private Long id;
+
+        @NotNull
+        @NotEmpty
+        private String name;
+        @NotNull
+        @NotEmpty
+        private String surname;
+        @NotEmpty
+        @CPF(message = "The CPF informed must be valid")
+        private String cpf;
+        @NotNull
+        private LocalDate birthday;
+        @NotNull
+        @NotEmpty
+        @Email(message = "The e-mail informed must be valid")
+        private String email;
+        @NotNull
+        @NotEmpty
+        private String description;
+        @NotNull
+        private eSex sex;
+    }
 
 }

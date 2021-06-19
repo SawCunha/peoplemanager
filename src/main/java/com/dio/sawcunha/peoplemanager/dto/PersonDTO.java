@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,7 +41,53 @@ public class PersonDTO {
     private eSex sex;
 
     @Valid
-    List<AddressDTO> addresses;
+    List<PersonAddressDTO> addresses;
     @Valid
-    List<PhoneDTO> phones;
+    List<PersonPhoneDTO> phones;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class PersonAddressDTO {
+        private Long id;
+        @NotEmpty(message = "It is mandatory to inform the Zip Code")
+        private String zipCode;
+        @NotEmpty(message = "It is mandatory to inform the City")
+        private String city;
+        @NotEmpty(message = "It is mandatory to inform the name the Address")
+        private String addressName;
+        @NotEmpty(message = "It is mandatory to inform the State")
+        private String state;
+        @NotEmpty(message = "It is mandatory to inform the Street")
+        private String street;
+        @NotEmpty(message = "It is mandatory to inform the Country")
+        private String country;
+        @NotNull(message = "The house number must be greater than 1.")
+        @Positive(message = "The house number must be greater than 1.")
+        private Integer number;
+        private String block;
+        private String complement;
+        private String reference;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class PersonPhoneDTO {
+        private Long id;
+
+        @NotNull(message = "The international prefix must be between 1 to 999")
+        @Positive(message = "The international prefix must be between 1 to 999")
+        @Max(value = 999, message = "The international prefix must be between 1 to 999")
+        private Integer prefixInternattional;
+
+        @Positive
+        @Max(value = 99,message = "The national prefix must be between 1 to 99")
+        private Integer prefixNational;
+        @NotNull(message = "The phone number must be entered")
+        @NotEmpty(message = "The phone number must be entered")
+        private String number;
+    }
 }

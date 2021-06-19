@@ -20,7 +20,7 @@ public class Address {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_person")
+    @JoinColumn(name = "id_person", nullable = false, foreignKey = @ForeignKey(name = "FK_Person_A"))
     private Person person;
 
     @Column(name = "zipCode")

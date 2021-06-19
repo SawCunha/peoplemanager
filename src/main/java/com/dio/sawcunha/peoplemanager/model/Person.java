@@ -37,8 +37,8 @@ public class Person {
     @Column(name = "gender")
     @Enumerated(value = EnumType.STRING)
     private eSex sex;
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     List<Address> addresses;
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     List<Phone> phones;
 }

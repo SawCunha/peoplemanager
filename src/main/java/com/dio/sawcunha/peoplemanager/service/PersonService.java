@@ -48,8 +48,23 @@ public class PersonService {
         }
 
         Person person = personMapper.toModel(personDTO);
-        person = personRepository.save(person);
+        person.getAddresses().forEach(address -> address.setPerson(person));
+        person.getPhones().forEach(phone -> phone.setPerson(person));
+        return personMapper.toDTO(personRepository.save(person));
+    }
 
-        return personMapper.toDTO(person);
+    @Transactional
+    public PersonDTO update(Long id, PersonDTO personDTO) throws PersonNotFoundIDException {
+        personRepository.findById(id).orElseThrow(PersonNotFoundIDException::new);
+        Person person = personMapper.toModel(personDTO);
+        person.getAddresses().forEach(address -> address.setPerson(person));
+        person.getPhones().forEach(phone -> phone.setPerson(person));
+        return personMapper.toDTO(personRepository.save(person));
+    }
+
+    @Transactional
+    public void delete(Long id) throws PersonNotFoundIDException {
+        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundIDException::new);
+        personRepository.delete(person);
     }
 }

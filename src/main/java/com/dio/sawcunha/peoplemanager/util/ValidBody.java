@@ -25,7 +25,10 @@ public class ValidBody {
         try{
             if(error.getCodes() != null) {
                 temp = error.getCodes()[0].split("\\.");
-                attribute = temp[temp.length - 1];
+                int index = 1;
+                attribute = temp[index++];
+                for(; index<temp.length;index++)
+                    attribute = String.format("%s.%s",attribute,temp[index]);
             } else {
                 attribute = "Not identified";
             }
