@@ -1,11 +1,11 @@
 package com.dio.sawcunha.peoplemanager.service;
 
-import com.dio.sawcunha.peoplemanager.dto.PeopleDTO;
-import com.dio.sawcunha.peoplemanager.dto.mapper.PeopleMapper;
+import com.dio.sawcunha.peoplemanager.dto.PersonDTO;
+import com.dio.sawcunha.peoplemanager.dto.mapper.PersonMapper;
 import com.dio.sawcunha.peoplemanager.enums.eMessageError;
-import com.dio.sawcunha.peoplemanager.exceptionmanager.PeopleNotFoundCPF;
-import com.dio.sawcunha.peoplemanager.model.People;
-import com.dio.sawcunha.peoplemanager.repository.PeopleRepository;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.PersonNotFoundCPF;
+import com.dio.sawcunha.peoplemanager.model.Person;
+import com.dio.sawcunha.peoplemanager.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +15,18 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PeopleService {
+public class PersonService {
 
-    private final PeopleRepository peopleRepository;
-    private final PeopleMapper peopleMapper;
+    private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
-    public List<PeopleDTO> findAll(){
+    public List<PersonDTO> findAll(){
         return new ArrayList<>();
     }
 
-    public PeopleDTO findByCpf(String cpf) throws PeopleNotFoundCPF {
-        People people = peopleRepository.findByCpf(cpf).orElseThrow(() -> new PeopleNotFoundCPF(eMessageError.PEOPLE_NOT_FOUND_CPF));
-        return peopleMapper.toDTO(people);
+    public PersonDTO findByCpf(String cpf) throws PersonNotFoundCPF {
+        Person person = personRepository.findByCpf(cpf).orElseThrow(() -> new PersonNotFoundCPF(eMessageError.PEOPLE_NOT_FOUND_CPF));
+        return personMapper.toDTO(person);
     }
 
 }

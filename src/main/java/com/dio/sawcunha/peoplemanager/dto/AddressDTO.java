@@ -18,7 +18,7 @@ public class AddressDTO {
 
     private Long id;
     @JsonIgnore
-    private PeopleDTO people;
+    private PersonDTO person;
     @NotNull
     @NotEmpty
     private String zipCode;

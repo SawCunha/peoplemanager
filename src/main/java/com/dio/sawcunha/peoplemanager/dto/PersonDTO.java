@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PeopleDTO {
+public class PersonDTO {
     private Long id;
 
     @NotNull

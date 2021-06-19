@@ -20,8 +20,8 @@ public class Phone {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_people")
-    private People people;
+    @JoinColumn(name = "id_person")
+    private Person person;
 
     @Column(name = "prefix_internattional")
     private Integer prefixInternattional;

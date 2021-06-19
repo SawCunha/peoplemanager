@@ -1,5 +1,6 @@
 package com.dio.sawcunha.peoplemanager.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +19,8 @@ public class PhoneDTO {
 
     private Long id;
 
-    //@JsonIgnore
-    private PeopleDTO people;
+    @JsonIgnore
+    private PersonDTO person;
 
     @NotNull
     @NotEmpty
