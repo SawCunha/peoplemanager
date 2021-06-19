@@ -46,7 +46,6 @@ public class PersonService {
         if(personOptional.isPresent()){
             throw new PersonAlreadyRegistersCpfException();
         }
-
         Person person = personMapper.toModel(personDTO);
         person.getAddresses().forEach(address -> address.setPerson(person));
         person.getPhones().forEach(phone -> phone.setPerson(person));

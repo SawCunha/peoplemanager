@@ -1,10 +1,7 @@
 package com.dio.sawcunha.peoplemanager.model;
 
 import com.dio.sawcunha.peoplemanager.enums.eSex;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @Entity
 @Table(name = "PM_Person")
 public class Person {

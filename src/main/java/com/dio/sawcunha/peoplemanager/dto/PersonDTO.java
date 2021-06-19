@@ -1,10 +1,7 @@
 package com.dio.sawcunha.peoplemanager.dto;
 
 import com.dio.sawcunha.peoplemanager.enums.eSex;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.Valid;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class PersonDTO {
     private Long id;
 
