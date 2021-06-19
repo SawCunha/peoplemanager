@@ -11,6 +11,7 @@ Utilizando Spring boot e suas dependências.
 - [MapStruct](https://mapstruct.org/)
 - [Gson](https://sites.google.com/site/gson/gson-user-guide)
 - [OpenAPI 3 e Spring Boot](https://springdoc.org/)
+- [JavaFaker](https://github.com/DiUS/java-faker)
 
 # Database Utilizando
 - [H2](https://www.h2database.com/html/main.html)
