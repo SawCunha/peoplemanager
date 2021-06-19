@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
@@ -22,15 +19,16 @@ public class PhoneDTO {
     @JsonIgnore
     private PersonDTO person;
 
-    @NotNull
-    @NotEmpty
-    @Positive
-    @Size(min = 1, max = 3)
+    @NotNull(message = "The international prefix must be between 1 to 999")
+    @Positive(message = "The international prefix must be between 1 to 999")
+    @Max(value = 999, message = "The international prefix must be between 1 to 999")
     private Integer prefixInternattional;
-    @Size(min = 1, max = 2)
+
+    @Positive
+    @Max(value = 99,message = "The national prefix must be between 1 to 99")
     private Integer prefixNational;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "The phone number must be entered")
+    @NotEmpty(message = "The phone number must be entered")
     private String number;
 
 }

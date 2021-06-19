@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "PM_People")
+@Table(name = "PM_Person")
 public class Person {
 
     @Id
@@ -37,8 +37,8 @@ public class Person {
     @Column(name = "gender")
     @Enumerated(value = EnumType.STRING)
     private eSex sex;
-    @OneToMany(mappedBy = "people")
+    @OneToMany(mappedBy = "person")
     List<Address> addresses;
-    @OneToMany(mappedBy = "people")
+    @OneToMany(mappedBy = "person")
     List<Phone> phones;
 }

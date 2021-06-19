@@ -1,11 +1,13 @@
 package com.dio.sawcunha.peoplemanager.exceptionmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
-@AllArgsConstructor
+import java.util.List;
+
+@Builder
 @Getter
 public class ExceptionResponse {
     private final String message;
     private final int codErro;
+    private final List<AttributeNotValid> validationErrors;
 }

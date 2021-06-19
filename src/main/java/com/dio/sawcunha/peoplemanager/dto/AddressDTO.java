@@ -19,27 +19,20 @@ public class AddressDTO {
     private Long id;
     @JsonIgnore
     private PersonDTO person;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the Zip Code")
     private String zipCode;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the City")
     private String city;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the name the Address")
     private String addressName;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the State")
     private String state;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the Street")
     private String street;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "It is mandatory to inform the Country")
     private String country;
-    @NotNull
-    @NotEmpty
-    @Positive
+    @NotNull(message = "The house number must be greater than 1.")
+    @Positive(message = "The house number must be greater than 1.")
     private Integer number;
     private String block;
     private String complement;

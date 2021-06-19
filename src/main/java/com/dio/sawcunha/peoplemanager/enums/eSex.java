@@ -1,9 +1,10 @@
 package com.dio.sawcunha.peoplemanager.enums;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum eSex {
     MALE("Male"),
