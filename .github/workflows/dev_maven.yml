@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - development
-      
+
 jobs:
   build:
 
@@ -32,9 +32,8 @@ jobs:
     - name: Build with Maven Test
       run: mvn test
     - name: Build with Maven
-      run: mvn -B package_dev --file pom.xml
+      run: mvn -B package --file pom.xml
     - run: mkdir staging && cp target/*.jar staging
     - uses: actions/upload-artifact@v2
       with:
-        name: Package
         path: staging
