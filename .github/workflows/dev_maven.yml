@@ -10,10 +10,7 @@ on:
   pull_request:
     branches:
       - development
-<<<<<<< HEAD
-
-=======
->>>>>>> cf9d924f215b1e57c5aef468fb175c0c91246342
+      
 jobs:
   build:
 
