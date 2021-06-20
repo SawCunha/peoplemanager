@@ -3,6 +3,7 @@ package com.dio.sawcunha.peoplemanager.service;
 import com.dio.sawcunha.peoplemanager.dto.PhoneDTO;
 import com.dio.sawcunha.peoplemanager.dto.mapper.PhoneMapper;
 import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PhoneNotFoundIDException;
+import com.dio.sawcunha.peoplemanager.model.Phone;
 import com.dio.sawcunha.peoplemanager.repository.PhoneRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class PhoneService {
 
     public PhoneDTO findByidPerson(Long idPerson) throws PhoneNotFoundIDException {
         return phoneMapper.toDTO(phoneRepository.findByIDPerson(idPerson).orElseThrow(PhoneNotFoundIDException::new));
+    }
+
+    public void delete(Long id) throws PhoneNotFoundIDException {
+        Phone phone = phoneRepository.findByIDPerson(id).orElseThrow(PhoneNotFoundIDException::new);
+        phoneRepository.delete(phone);
     }
 }

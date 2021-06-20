@@ -38,4 +38,10 @@ public class AddressController {
         return ResponseEntity.ok(addressService.findByidPerson(idPerson));
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) throws AddressNotFoundIDException {
+        addressService.delete(id);
+    }
+
 }

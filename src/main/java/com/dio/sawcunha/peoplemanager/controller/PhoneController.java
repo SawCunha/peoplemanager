@@ -38,4 +38,10 @@ public class PhoneController {
         return ResponseEntity.ok(phoneService.findByidPerson(idPerson));
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) throws PhoneNotFoundIDException {
+        phoneService.delete(id);
+    }
+
 }
