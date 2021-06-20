@@ -15,7 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      VERSION: ${{ mvn help:evaluate -Dexpression=project.version -q -DforceStdout }}
+      VERSION: mvn help:evaluate -Dexpression=project.version -q -DforceStdout 
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
