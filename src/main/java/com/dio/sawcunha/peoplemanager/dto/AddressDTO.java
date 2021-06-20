@@ -47,26 +47,12 @@ public class AddressDTO {
     @Builder
     public static class AddressPersonDTO {
         private Long id;
-
-        @NotNull
-        @NotEmpty
         private String name;
-        @NotNull
-        @NotEmpty
         private String surname;
-        @NotEmpty
-        @CPF(message = "The CPF informed must be valid")
         private String cpf;
-        @NotNull
         private LocalDate birthday;
-        @NotNull
-        @NotEmpty
-        @Email(message = "The e-mail informed must be valid")
         private String email;
-        @NotNull
-        @NotEmpty
         private String description;
-        @NotNull
         private eSex sex;
     }
 

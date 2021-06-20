@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Data
@@ -38,26 +40,12 @@ public class PhoneDTO {
     @Builder
     public static class PhonePersonDTO {
         private Long id;
-
-        @NotNull
-        @NotEmpty
         private String name;
-        @NotNull
-        @NotEmpty
         private String surname;
-        @NotEmpty
-        @CPF(message = "The CPF informed must be valid")
         private String cpf;
-        @NotNull
         private LocalDate birthday;
-        @NotNull
-        @NotEmpty
-        @Email(message = "The e-mail informed must be valid")
         private String email;
-        @NotNull
-        @NotEmpty
         private String description;
-        @NotNull
         private eSex sex;
     }
 }

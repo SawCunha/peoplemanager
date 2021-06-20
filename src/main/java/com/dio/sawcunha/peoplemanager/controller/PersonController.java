@@ -2,6 +2,7 @@ package com.dio.sawcunha.peoplemanager.controller;
 
 
 import com.dio.sawcunha.peoplemanager.dto.PersonDTO;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.enums.eMessageError;
 import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.ExceptionPeopleManager;
 import com.dio.sawcunha.peoplemanager.service.PersonService;
 import com.dio.sawcunha.peoplemanager.util.ValidBody;
@@ -51,7 +52,7 @@ public class PersonController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<PersonDTO> save(@RequestBody @Valid PersonDTO personDTO, BindingResult result) throws ExceptionPeopleManager{
-        validBody.validBody(result);
+        validBody.validBody(result, eMessageError.PERSON_NOT_VALID);
         return ResponseEntity.status(HttpStatus.CREATED).body(personService.save(personDTO));
     }
 
@@ -59,7 +60,7 @@ public class PersonController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<PersonDTO> update(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO, BindingResult result) throws ExceptionPeopleManager{
-        validBody.validBody(result);
+        validBody.validBody(result, eMessageError.PERSON_NOT_VALID);
         return ResponseEntity.ok(personService.update(id, personDTO));
     }
 

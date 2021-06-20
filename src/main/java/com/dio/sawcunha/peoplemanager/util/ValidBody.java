@@ -1,6 +1,7 @@
 package com.dio.sawcunha.peoplemanager.util;
 
-import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PersonNotValidException;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.enums.eMessageError;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.NotValidException;
 import com.dio.sawcunha.peoplemanager.exceptionmanager.model.AttributeNotValid;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ValidBody {
+public class ValidBody{
 
-    public void validBody(BindingResult result) throws PersonNotValidException {
+    public void validBody(BindingResult result, eMessageError messageError) throws NotValidException {
         if(result.hasErrors()){
             List<AttributeNotValid> erros = result.getAllErrors().stream().map( error -> new AttributeNotValid(getAttribute(error),error.getDefaultMessage())).collect(Collectors.toList());
-            throw new PersonNotValidException(erros);
+            throw new NotValidException(messageError, erros);
         }
     }
 
