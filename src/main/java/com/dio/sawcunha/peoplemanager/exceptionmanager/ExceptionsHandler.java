@@ -24,8 +24,8 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(e.createResponse());
     }
 
-    @ExceptionHandler(PersonNotValidException.class)
-    protected ResponseEntity<ExceptionResponse> handleSecurity(PersonNotValidException e){
+    @ExceptionHandler(NotValidException.class)
+    protected ResponseEntity<ExceptionResponse> handleSecurity(NotValidException e){
         return ResponseEntity.badRequest().body(e.createResponse());
     }
 
@@ -41,6 +41,11 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AddressNotFoundIDException.class)
     protected ResponseEntity<ExceptionResponse> handleSecurity(AddressNotFoundIDException e){
+        return ResponseEntity.badRequest().body(e.createResponse());
+    }
+
+    @ExceptionHandler(IDPathDifferentBodyException.class)
+    protected ResponseEntity<ExceptionResponse> handleSecurity(IDPathDifferentBodyException e){
         return ResponseEntity.badRequest().body(e.createResponse());
     }
 

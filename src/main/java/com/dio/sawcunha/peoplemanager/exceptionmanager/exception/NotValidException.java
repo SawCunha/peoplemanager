@@ -11,13 +11,13 @@ import java.util.List;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 @Getter
-public class PersonNotValidException extends ExceptionPeopleManager{
+public class NotValidException extends ExceptionPeopleManager{
 
     private final List<AttributeNotValid> erros;
-    public PersonNotValidException(List<AttributeNotValid> erros) {
-        super(eMessageError.PERSON_NOT_VALID.getMessage());
+    public NotValidException(eMessageError messageError, List<AttributeNotValid> erros) {
+        super(messageError.getMessage());
         this.erros = erros;
-        this.messageError = eMessageError.PERSON_NOT_VALID;
+        this.messageError = messageError;
     }
 
     @Override

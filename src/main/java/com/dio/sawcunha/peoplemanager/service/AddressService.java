@@ -3,8 +3,13 @@ package com.dio.sawcunha.peoplemanager.service;
 import com.dio.sawcunha.peoplemanager.dto.AddressDTO;
 import com.dio.sawcunha.peoplemanager.dto.mapper.AddressMapper;
 import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.AddressNotFoundIDException;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.ExceptionPeopleManager;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.IDPathDifferentBodyException;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PersonNotFoundIDException;
 import com.dio.sawcunha.peoplemanager.model.Address;
+import com.dio.sawcunha.peoplemanager.model.Person;
 import com.dio.sawcunha.peoplemanager.repository.AddressRepository;
+import com.dio.sawcunha.peoplemanager.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import java.util.List;
 public class AddressService {
 
     private final AddressRepository addressRepository;
+    private final PersonRepository personRepository;
     private final AddressMapper addressMapper;
 
     @Transactional(readOnly = true)
@@ -24,16 +30,48 @@ public class AddressService {
         return addressMapper.toDTOs(addressRepository.findAll());
     }
 
-    public AddressDTO findById(Long id) throws AddressNotFoundIDException {
-        return addressMapper.toDTO(addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new));
+    @Transactional(readOnly = true)
+    public AddressDTO findById(Long id, boolean inforPerson) throws AddressNotFoundIDException {
+        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new));
+        if(!inforPerson) addressDTO.setPerson(null);
+        return addressDTO;
     }
 
-    public AddressDTO findByidPerson(Long idPerson) throws AddressNotFoundIDException {
-        return addressMapper.toDTO(addressRepository.findByIDPerson(idPerson).orElseThrow(AddressNotFoundIDException::new));
+    @Transactional(readOnly = true)
+    public AddressDTO findByidPerson(Long idPerson, boolean inforPerson) throws AddressNotFoundIDException {
+        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findByIDPerson(idPerson).orElseThrow(AddressNotFoundIDException::new));
+        if(!inforPerson) addressDTO.setPerson(null);
+        return addressDTO;
     }
 
+    @Transactional
     public void delete(Long id) throws AddressNotFoundIDException {
         Address address = addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new);
         addressRepository.delete(address);
+    }
+
+    @Transactional
+    public AddressDTO createAddressPerson(Long idPerson, AddressDTO addressDTO) throws ExceptionPeopleManager {
+        Person person = personRepository.findById(idPerson).orElseThrow(PersonNotFoundIDException::new);
+        addressDTO.setPerson(null);
+        Address address = addressMapper.toModel(addressDTO);
+        address.setPerson(person);
+        return addressMapper.toDTO(addressRepository.save(address));
+    }
+
+    @Transactional
+    public AddressDTO updateAddressPerson(Long id, AddressDTO addressDTO) throws ExceptionPeopleManager {
+        validIDPathAndBody(id,addressDTO);
+        Address address = addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new);
+        addressDTO.setPerson(null);
+        Address addressUpdate = addressMapper.toModel(addressDTO);
+        addressUpdate.setPerson(address.getPerson());
+        addressUpdate.setId(address.getId());
+        return addressMapper.toDTO(addressRepository.save(addressUpdate));
+    }
+
+    private void validIDPathAndBody(Long idPhone, AddressDTO addressDTO) throws IDPathDifferentBodyException {
+        if(addressDTO.getId() == null || addressDTO.getId() == 0 ) throw new IDPathDifferentBodyException();
+        if(!idPhone.equals(addressDTO.getId())) throw new IDPathDifferentBodyException();
     }
 }

@@ -2,9 +2,7 @@ package com.dio.sawcunha.peoplemanager.service;
 
 import com.dio.sawcunha.peoplemanager.dto.PersonDTO;
 import com.dio.sawcunha.peoplemanager.dto.mapper.PersonMapper;
-import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PersonAlreadyRegistersCpfException;
-import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PersonNotFoundCPFException;
-import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.PersonNotFoundIDException;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.*;
 import com.dio.sawcunha.peoplemanager.model.Person;
 import com.dio.sawcunha.peoplemanager.repository.PersonRepository;
 import lombok.AllArgsConstructor;
@@ -53,8 +51,10 @@ public class PersonService {
     }
 
     @Transactional
-    public PersonDTO update(Long id, PersonDTO personDTO) throws PersonNotFoundIDException {
+    public PersonDTO update(Long id, PersonDTO personDTO) throws ExceptionPeopleManager {
+        validIDPathAndBody(id,personDTO);
         personRepository.findById(id).orElseThrow(PersonNotFoundIDException::new);
+        personDTO.setId(id);
         Person person = personMapper.toModel(personDTO);
         person.getAddresses().forEach(address -> address.setPerson(person));
         person.getPhones().forEach(phone -> phone.setPerson(person));
@@ -65,5 +65,10 @@ public class PersonService {
     public void delete(Long id) throws PersonNotFoundIDException {
         Person person = personRepository.findById(id).orElseThrow(PersonNotFoundIDException::new);
         personRepository.delete(person);
+    }
+
+    private void validIDPathAndBody(Long idPhone, PersonDTO personDTO) throws IDPathDifferentBodyException {
+        if(personDTO.getId() == null || personDTO.getId() == 0 ) throw new IDPathDifferentBodyException();
+        if(!idPhone.equals(personDTO.getId())) throw new IDPathDifferentBodyException();
     }
 }
