@@ -32,16 +32,18 @@ public class AddressService {
 
     @Transactional(readOnly = true)
     public AddressDTO findById(Long id, boolean inforPerson) throws AddressNotFoundIDException {
-        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new));
-        if(!inforPerson) addressDTO.setPerson(null);
+        AddressDTO addressDTO;
+        if(inforPerson) {
+            addressDTO = addressMapper.toDTO(addressRepository.findById(id).orElseThrow(AddressNotFoundIDException::new));
+        } else {
+            addressDTO = addressRepository.findByIdDTO(id).orElseThrow(AddressNotFoundIDException::new);
+        }
         return addressDTO;
     }
 
     @Transactional(readOnly = true)
-    public AddressDTO findByidPerson(Long idPerson, boolean inforPerson) throws AddressNotFoundIDException {
-        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findByIDPerson(idPerson).orElseThrow(AddressNotFoundIDException::new));
-        if(!inforPerson) addressDTO.setPerson(null);
-        return addressDTO;
+    public List<AddressDTO> findByidPerson(Long idPerson) throws AddressNotFoundIDException {
+        return addressRepository.findByIDPersonDTO(idPerson).orElseThrow(AddressNotFoundIDException::new);
     }
 
     @Transactional
@@ -70,8 +72,8 @@ public class AddressService {
         return addressMapper.toDTO(addressRepository.save(addressUpdate));
     }
 
-    private void validIDPathAndBody(Long idPhone, AddressDTO addressDTO) throws IDPathDifferentBodyException {
+    private void validIDPathAndBody(Long idAddress, AddressDTO addressDTO) throws IDPathDifferentBodyException {
         if(addressDTO.getId() == null || addressDTO.getId() == 0 ) throw new IDPathDifferentBodyException();
-        if(!idPhone.equals(addressDTO.getId())) throw new IDPathDifferentBodyException();
+        if(!idAddress.equals(addressDTO.getId())) throw new IDPathDifferentBodyException();
     }
 }

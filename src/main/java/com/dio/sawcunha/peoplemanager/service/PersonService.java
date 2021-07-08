@@ -53,7 +53,7 @@ public class PersonService {
     @Transactional
     public PersonDTO update(Long id, PersonDTO personDTO) throws ExceptionPeopleManager {
         validIDPathAndBody(id,personDTO);
-        personRepository.findById(id).orElseThrow(PersonNotFoundIDException::new);
+        if(personRepository.existsById(id)) throw new PersonNotFoundIDException();
         personDTO.setId(id);
         Person person = personMapper.toModel(personDTO);
         person.getAddresses().forEach(address -> address.setPerson(person));

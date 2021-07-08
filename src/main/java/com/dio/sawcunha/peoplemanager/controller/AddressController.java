@@ -34,14 +34,14 @@ public class AddressController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AddressDTO> findById(@PathVariable Long id, @RequestParam(value = "person", defaultValue = "true") boolean inforPerson) throws AddressNotFoundIDException {
+    public ResponseEntity<AddressDTO> findById(@PathVariable Long id, @RequestParam(value = "person", defaultValue = "false") boolean inforPerson) throws AddressNotFoundIDException {
         return ResponseEntity.ok(addressService.findById(id, inforPerson));
     }
 
     @GetMapping("/person/{idPerson}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AddressDTO> findByPersonId(@PathVariable Long idPerson, @RequestParam(value = "person", defaultValue = "true") boolean inforPerson) throws AddressNotFoundIDException {
-        return ResponseEntity.ok(addressService.findByidPerson(idPerson, inforPerson));
+    public ResponseEntity<List<AddressDTO>> findByPersonId(@PathVariable Long idPerson) throws AddressNotFoundIDException {
+        return ResponseEntity.ok(addressService.findByidPerson(idPerson));
     }
 
     @DeleteMapping("/{id}")

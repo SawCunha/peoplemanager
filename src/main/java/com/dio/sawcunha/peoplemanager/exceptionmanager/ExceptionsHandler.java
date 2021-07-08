@@ -1,15 +1,20 @@
 package com.dio.sawcunha.peoplemanager.exceptionmanager;
 
 import com.dio.sawcunha.peoplemanager.exceptionmanager.exception.*;
+import com.dio.sawcunha.peoplemanager.exceptionmanager.model.AttributeNotValid;
 import com.dio.sawcunha.peoplemanager.exceptionmanager.model.ExceptionResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
@@ -53,6 +58,20 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return ResponseEntity.status(status).body(
                 ExceptionResponse.builder().codErro(99).message(ex.getMessage()).build()
+        );
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        List<AttributeNotValid> validationErrorsDTO = new ArrayList<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(e -> {
+            validationErrorsDTO.add(new AttributeNotValid(e.getField(), e.getDefaultMessage()));
+        });
+
+        return ResponseEntity.status(status).body(
+                ExceptionResponse.builder().codErro(99).message(ex.getMessage()).validationErrors(validationErrorsDTO).build()
         );
     }
 }
