@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -38,6 +36,20 @@ public class AddressDTO {
     private String block;
     private String complement;
     private String reference;
+
+    public AddressDTO(Long id, String zipCode, String city, String addressName, String state, String street, String country, Integer number, String block, String complement, String reference) {
+        this.id = id;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.addressName = addressName;
+        this.state = state;
+        this.street = street;
+        this.country = country;
+        this.number = number;
+        this.block = block;
+        this.complement = complement;
+        this.reference = reference;
+    }
 
     private AddressPersonDTO person;
 

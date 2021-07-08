@@ -34,14 +34,14 @@ public class PhoneController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<PhoneDTO> findById(@PathVariable Long id, @RequestParam(value = "person", defaultValue = "true") boolean inforPerson) throws PhoneNotFoundIDException {
+    public ResponseEntity<PhoneDTO> findById(@PathVariable Long id, @RequestParam(value = "person", defaultValue = "false") boolean inforPerson) throws PhoneNotFoundIDException {
         return ResponseEntity.ok(phoneService.findById(id, inforPerson));
     }
 
     @GetMapping("/person/{idPerson}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<PhoneDTO> findByPersonId(@PathVariable Long idPerson, @RequestParam(value = "person", defaultValue = "true") boolean inforPerson) throws PhoneNotFoundIDException {
-        return ResponseEntity.ok(phoneService.findByidPerson(idPerson, inforPerson));
+    public ResponseEntity<List<PhoneDTO>> findByPersonId(@PathVariable Long idPerson) throws PhoneNotFoundIDException {
+        return ResponseEntity.ok(phoneService.findByidPerson(idPerson));
     }
 
     @DeleteMapping("/{id}")

@@ -32,21 +32,23 @@ public class PhoneService {
 
     @Transactional(readOnly = true)
     public PhoneDTO findById(Long id, boolean inforPerson) throws PhoneNotFoundIDException {
-        PhoneDTO phoneDTO = phoneMapper.toDTO(phoneRepository.findById(id).orElseThrow(PhoneNotFoundIDException::new));
-        if(!inforPerson) phoneDTO.setPerson(null);
+        PhoneDTO phoneDTO;
+        if(inforPerson){
+            phoneDTO = phoneMapper.toDTO(phoneRepository.findById(id).orElseThrow(PhoneNotFoundIDException::new));
+        } else {
+            phoneDTO = phoneRepository.findByIDDTO(id).orElseThrow(PhoneNotFoundIDException::new);
+        }
         return phoneDTO;
     }
 
     @Transactional(readOnly = true)
-    public PhoneDTO findByidPerson(Long idPerson, boolean inforPerson) throws PhoneNotFoundIDException {
-        PhoneDTO phoneDTO = phoneMapper.toDTO(phoneRepository.findByIDPerson(idPerson).orElseThrow(PhoneNotFoundIDException::new));
-        if(!inforPerson) phoneDTO.setPerson(null);
-        return phoneDTO;
+    public List<PhoneDTO> findByidPerson(Long idPerson) throws PhoneNotFoundIDException {
+        return phoneRepository.findByIDPersonDTO(idPerson).orElseThrow(PhoneNotFoundIDException::new);
     }
 
     @Transactional
     public void delete(Long id) throws PhoneNotFoundIDException {
-        Phone phone = phoneRepository.findByIDPerson(id).orElseThrow(PhoneNotFoundIDException::new);
+        Phone phone = phoneRepository.findById(id).orElseThrow(PhoneNotFoundIDException::new);
         phoneRepository.delete(phone);
     }
 

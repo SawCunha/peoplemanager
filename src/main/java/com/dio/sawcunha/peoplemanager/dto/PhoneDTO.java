@@ -34,6 +34,13 @@ public class PhoneDTO {
 
     private PhonePersonDTO person;
 
+    public PhoneDTO(Long id, Integer prefixInternattional, Integer prefixNational, String number) {
+        this.id = id;
+        this.prefixInternattional = prefixInternattional;
+        this.prefixNational = prefixNational;
+        this.number = number;
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
